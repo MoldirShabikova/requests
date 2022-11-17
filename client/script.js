@@ -1,7 +1,11 @@
 ////////////////////////////////////////////////
 //THE TEST SERVER IS RUNNING ON LOCALHOST:3000//
-////////////////////////////////////////////////
 
+
+
+
+////////////////////////////////////////////////
+console.log('connected')
 // PROBLEM 1
 /*
     In the index.html file in this folder there is a button with an id of 'say-hello-button'!
@@ -11,7 +15,7 @@
 
 // CODE HERE
 
-
+let sayHelloButton = document.querySelector('#say-hello-button')
 // PROBLEM 2
 /*
     Create a function that changes sayHelloButton's background color to black and its text color to white (you can use the .style object or create a CSS class and use classList.add)
@@ -21,6 +25,13 @@
 
 // CODE HERE
 
+function changeBackgroundColor(){
+   sayHelloButton.style.background = "black";
+   sayHelloButton.style.color = 'white'
+    
+}
+
+sayHelloButton.addEventListener('mouseover', changeBackgroundColor)
 
 // PROBLEM 3
 /*
@@ -33,6 +44,12 @@
 
 // CODE HERE
 
+function removeColor(){
+    sayHelloButton.style.background = '#EFEFEF'
+    sayHelloButton.style.color = 'black'
+}
+
+sayHelloButton.addEventListener('mouseout', removeColor)
 
 // PROBLEM 4
 /*
@@ -55,6 +72,18 @@ const sayHello = () => {
 // CODE HERE
 
 
+
+// PROBLEM 9
+/* 
+    Back in the ohMy function on Problem 5, replace the console log in the promise's callback with a for loop that loops over res.data. 
+
+    On each iteration of the loop, create a new p element. Set its textContent equal the string at the current index (i) and then append the new p element onto the document's body. 
+*/
+
+// Code in the ohMy function in Problem 5
+
+ sayHelloButton.addEventListener('click', sayHello)
+
 // PROBLEM 5 
 /*
     Now that we have attached a few event listeners why dont we try adding a request? 
@@ -67,7 +96,15 @@ const sayHello = () => {
 */ 
 
 const ohMy = () => {
-    // YOUR CODE HERE
+    axios.get('http://localhost:3000/animals')
+    .then((res)=>{
+        for(let i = 0; i < res.data.length; i++){
+            let element = document.createElement('p')
+            element.textContent = res.data[i]
+            document.body.appendChild(element)
+        }
+    })
+    .catch(err=> console.error(err))
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
@@ -86,9 +123,18 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
     We'll be updating this function in the next problem.
 */
 
+
+
 const repeatMyParam = () => {
-    //YOUR CODE HERE
+    axios.get(`http://localhost:3000/repeat/apple`)
+    .then((res)=> {
+
+        let repeatText = document.getElementById('repeat-text')
+        repeatText.textContent = res.data
+        repeatText.style.display = 'block'
+    })
 }
+document.getElementById('repeat-button').addEventListener('click',repeatMyParam)
 
 // PROBLEM 7
 /*
@@ -114,20 +160,15 @@ const repeatMyParam = () => {
 
 // CODE HERE
 
-
-
+function newRequest(){
+    axios.get(`http://localhost:3000/query-test?key=apple,banana`)
+    .then((res)=>console.log(res.data))
+}
+document.getElementById('query-button').addEventListener('click',newRequest)
 ////////////////
 //INTERMEDIATE//
 ////////////////
 
-// PROBLEM 9
-/* 
-    Back in the ohMy function on Problem 5, replace the console log in the promise's callback with a for loop that loops over res.data. 
-
-    On each iteration of the loop, create a new p element. Set its textContent equal the string at the current index (i) and then append the new p element onto the document's body. 
-*/
-
-// Code in the ohMy function in Problem 5
 
 // PROBLEM 10 
 /*
@@ -139,6 +180,8 @@ const repeatMyParam = () => {
 */
 
 // Edit code in Problem 8
+
+
 
 
 
