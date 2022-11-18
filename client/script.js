@@ -207,5 +207,21 @@ document.getElementById('query-button').addEventListener('click',newRequest)
 
     Based on what we did earlier to display this type of data, write code that will display the response in your HTML document. 
 */
-
 // CODE HERE 
+
+function createFood(e){
+    e.preventDefault()
+    let foodInput = document.querySelector('#input')
+    let body = {
+        newFood: foodInput.value
+    }
+    axios.post(`http://localhost:3000/food`, body)
+    .then((res)=> console.log(res.data))
+   let li =document.createElement('li')
+   li.textContent = foodInput.value
+   let ul = document.querySelector('#ul')
+ul.appendChild(li)
+foodInput.value = ""
+}
+
+document.querySelector('#addFood').addEventListener('click', createFood)
